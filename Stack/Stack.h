@@ -45,8 +45,11 @@ public:
 	// Desc: Returns the size of the stack.
 	int size() const;
 
-	// Returns whether the stack is empty.
+	// Desc: Returns whether the stack is empty.
 	bool empty() const;
+
+	// Desc: Assignment operator.
+	Stack& operator = (const Stack &rhs);
 
 	// Desc: Prints the content of the stack.
 	template <class K>
@@ -64,7 +67,7 @@ Stack<T>::Stack() {
 
 // Desc: Copy constructor
 template <class T>
-Stack<T>::Stack(const Stack &rhs) {
+Stack<T>::Stack(const Stack<T> &rhs) {
 	capacity = rhs.capacity;
 	length = rhs.length;
 	arr = new T[capacity];
@@ -118,11 +121,27 @@ int Stack<T>::size() const {
 	return length;
 } // size
 
-// Returns whether the stack is empty.
+// Desc: Returns whether the stack is empty.
 template <class T>
 bool Stack<T>::empty() const {
 	return (length == 0);
 } // empty
+
+// Desc: Assignment operator.
+template <class T>
+Stack<T>& Stack<T>::operator = (const Stack<T> &rhs) {
+	if (&rhs == this)
+		return *this;
+
+	if (this -> capacity > 0)
+		delete [] arr;
+	capacity = rhs.capacity;
+	length = rhs.length;
+	arr = new T[capacity];
+	for (int i = 0; i < length; i++)
+		arr[i] = rhs.arr[i];
+	return *this;
+} // operator =
 
 // Desc: Prints the content of the stack.
 template <class K>
@@ -131,7 +150,7 @@ ostream& operator << (ostream& os, const Stack<K> &S) {
 		cout << S.arr[i] << " ";
 	}
 	return os;
-}
+} // operator <<
 
 // End of Stack.h
 
