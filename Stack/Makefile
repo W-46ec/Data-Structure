@@ -1,10 +1,10 @@
-all:	x
+all:	stack
 
-x:	main.o
-	g++ -Wall -o x main.o
+stack:	main.o
+	g++ -Wall -o stack main.o
 
 main.o:	main.cpp Stack.h
 	g++ -Wall -c main.cpp
 
 clean:
-	rm -f x *.o
+	rm -f stack *.o
