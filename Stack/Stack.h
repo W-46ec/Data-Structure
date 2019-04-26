@@ -1,5 +1,13 @@
 
-// Stack.h
+/*
+ * Stack.h
+ *
+ * Class Description: Stack ADT (template).
+ * Class Invariant: A sequence of data with push/pop in LIFO order.
+ *
+ *
+ */
+
 
 #pragma once
 
@@ -7,32 +15,30 @@
 
 using namespace std;
 
-// Description: Stack ADT (template)
-// Class Invariant: A sequence of data with push/pop in LIFO order.
 template <class T>
 class Stack {
 private:
 	static unsigned const INITIAL_SIZE = 8;		// Initial capacity
 	int capacity;	// The maximum number of elements it can hold.
-	int length;		// Number of elements.
+	int length;		// Number of elements in the stack.
 	T *arr;			// Sequence of data.
 public:
-	// Constructors and Destructor
-	Stack();
-	Stack(const Stack &rhs);
-	~Stack();
 
-	// Desc: Push the given element into the stack.
-	// Post: The given element is inserted to the top of the stack.
+	Stack();	// Constructor
+	Stack(const Stack &rhs);	// Copy constructor
+	~Stack();	// Destructor
+
+	// Desc: Pushes the given element into the stack.
+	// Post: The given element is being inserted to the top of the stack.
 	//       Capacity is doubled if the stack is full.
 	void push(const T &x);
 
-	// Desc: Remove and return the element at top of the stack.
+	// Desc: Removes and returns the element at top of the stack.
 	//  Pre: Stack is not empty.
-	// Post: Top element is removed. Size is decreased by 1.
+	// Post: Top element is being removed. Size is decreased by 1.
 	T pop();
 
-	// Desc: Returns a reference to the top most element of the stack.
+	// Desc: Returns a reference to the topmost element of the stack.
 	//  Pre: Stack is not empty.
 	T& top() const;
 
@@ -72,8 +78,8 @@ Stack<T>::~Stack() {
 	delete [] arr;
 } // ~Stack
 
-// Desc: Push the given element into the stack.
-// Post: The given element is inserted to the top of the stack.
+// Desc: Pushes the given element into the stack.
+// Post: The given element is being inserted to the top of the stack.
 //       Capacity is doubled if the stack is full.
 template <class T>
 void Stack<T>::push(const T &x) {
@@ -91,15 +97,15 @@ void Stack<T>::push(const T &x) {
 	}
 } // push
 
-// Desc: Remove and return the element at top of the stack.
+// Desc: Removes and returns the element at top of the stack.
 //  Pre: Stack is not empty.
-// Post: Top element is removed. Size is decreased by 1.
+// Post: Top element is being removed. Size is decreased by 1.
 template <class T>
 T Stack<T>::pop() {
 	return arr[--length];
 } // pop
 
-// Desc: Returns a reference to the top most element of the stack.
+// Desc: Returns a reference to the topmost element of the stack.
 //  Pre: Stack is not empty.
 template <class T>
 T& Stack<T>::top() const {
