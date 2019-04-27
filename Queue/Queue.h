@@ -17,51 +17,51 @@ using namespace std;
 
 template <class T>
 class Queue {
-	private:
-		static int const INITIAL_SIZE = 8;		// Initial capacity
-		int length;			// Number of elements in the queue.
-		int capacity;		// The maximum number of elements it can hold.
-		int frontIndex;		// Index of the topmost element.
-		int backIndex;		// Index where the next element will be placed.
-		T *arr;				// Sequence of data.
+private:
+	static int const INITIAL_SIZE = 8;		// Initial capacity
+	int length;			// Number of elements in the queue.
+	int capacity;		// The maximum number of elements it can hold.
+	int frontIndex;		// Index of the topmost element.
+	int backIndex;		// Index where the next element will be placed.
+	T *arr;				// Sequence of data.
 
-	public:
+public:
 
-		Queue();	// Constructor
-		Queue(const Queue &rhs);	// Copy constructor
-		~Queue();	// Destructor
+	Queue();	// Constructor
+	Queue(const Queue &rhs);	// Copy constructor
+	~Queue();	// Destructor
 
-		// Desc: Returns true if Queue is empty.
-		bool empty() const;
+	// Desc: Returns true if Queue is empty.
+	bool empty() const;
 
-		// Desc: Returns the size of the stack.
-		int size() const;
+	// Desc: Returns the size of the stack.
+	int size() const;
 
-		// Desc: Inserts the given element at the back of the Queue.
-		// Post: The element is being inserted to the back of the queue.
-		//       Size is increased by 1.
-		//       Capacity is doubled if the queue is full.
-		void enqueue(const T &x);
+	// Desc: Inserts the given element at the back of the Queue.
+	// Post: The element is being inserted to the back of the queue.
+	//       Size is increased by 1.
+	//       Capacity is doubled if the queue is full.
+	void enqueue(const T &x);
 
-		// Desc: Removes the element at the front.
-		//  Pre: Queue not empty.
-		// Post: The topmost element is being removed from the front of the queue.
-		//       Size is decreased by 1.
-		//       Capacity is halved if the array is less than 1/4 full.
-		//       However, capacity can never be less than INITIAL_SIZE.
-		void dequeue();
+	// Desc: Removes the element at the front.
+	//  Pre: Queue not empty.
+	// Post: The topmost element is being removed from the front of the queue.
+	//       Size is decreased by 1.
+	//       Capacity is halved if the array is less than 1/4 full.
+	//       However, capacity can never be less than INITIAL_SIZE.
+	void dequeue();
 
-		// Desc: Returns the reference of the topmost element.
-		//  Pre: Queue not empty.
-		// Post: Queue remains unchanged.
-		T& front() const;
+	// Desc: Returns the reference of the topmost element.
+	//  Pre: Queue not empty.
+	// Post: Queue remains unchanged.
+	T& front() const;
 
-		// Desc: Assignment operator.
-		Queue& operator = (const Queue &rhs);
+	// Desc: Assignment operator.
+	Queue& operator = (const Queue &rhs);
 
-		// Desc: Prints the content of the queue.
-		template <class K>
-		friend ostream& operator << (ostream& os, const Queue<K> &Q);
+	// Desc: Prints the content of the queue.
+	template <class K>
+	friend ostream& operator << (ostream& os, const Queue<K> &Q);
 
 }; // Queue
 

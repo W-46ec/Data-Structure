@@ -37,7 +37,7 @@ public:
 	//  Pre: Stack is not empty.
 	// Post: Topmost element is being removed from the stack.
 	//       Size is decreased by 1.
-	//       Returns the reference to the topmost element.
+	//       Returns a reference to the topmost element.
 	T& pop();
 
 	// Desc: Returns a reference to the topmost element of the stack.
