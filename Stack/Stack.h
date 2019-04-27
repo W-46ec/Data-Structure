@@ -35,8 +35,10 @@ public:
 
 	// Desc: Removes and returns the element at top of the stack.
 	//  Pre: Stack is not empty.
-	// Post: Top element is being removed. Size is decreased by 1.
-	T pop();
+	// Post: Topmost element is being removed from the stack.
+	//       Size is decreased by 1.
+	//       Returns the reference to the topmost element.
+	T& pop();
 
 	// Desc: Returns a reference to the topmost element of the stack.
 	//  Pre: Stack is not empty.
@@ -102,9 +104,11 @@ void Stack<T>::push(const T &x) {
 
 // Desc: Removes and returns the element at top of the stack.
 //  Pre: Stack is not empty.
-// Post: Top element is being removed. Size is decreased by 1.
+// Post: Topmost element is being removed from the stack.
+//       Size is decreased by 1.
+//       Returns the reference to the topmost element.
 template <class T>
-T Stack<T>::pop() {
+T& Stack<T>::pop() {
 	return arr[--length];
 } // pop
 
