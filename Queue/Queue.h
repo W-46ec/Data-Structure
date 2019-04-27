@@ -2,13 +2,12 @@
 /*
  * Queue.h
  *
- * Class Description: Queue data collection ADT (template).
+ * Class Description: Queue ADT (template).
  * Class Invariant: A sequence of data with enqueue/dequeue in FIFO order.
  *
  *
  */
 
-// Queue.h
 
 #pragma once
 
