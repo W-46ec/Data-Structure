@@ -24,7 +24,8 @@ int main() {
 	int *A = new int[n];
 
 	for (int i = 0; i < n; i++) {
-		A[i] = rand() % n;
+		A[i] = n - i + 1;
+		// A[i] = rand() % n;
 	}
 
 	Heap<int> H(A, n, min_heap);

@@ -3,7 +3,7 @@
  * Heap.h
  *
  * Class Description: Binary Heap data structure (template).
- * Class Invariant: Each node has a smaller / greater (depends on the tag) key than its children.
+ * Class Invariant: Each node has a smaller / greater (depends on "type") key than its children.
  *
  *
  */
@@ -20,14 +20,30 @@ typedef enum Type {
 	min_heap, max_heap
 } heapType;
 
+// Desc: Comparison function.
+// Post: Return true if x is greater than y.
+template <class T>
+bool isGreater(const T &x, const T &y) {
+	return x > y;
+} // isGreater
+
+// Desc: Comparison function.
+// Post: Return true if x is smaller than y.
+template <class T>
+bool isSmaller(const T &x, const T &y) {
+	return x < y;
+} // isSmaller
+
+
+
 template <class T>
 class Heap {
 private:
 	static int const INITIAL_SIZE = 8;		// Initial capacity
-	int (*prior)(const T& x, const T &y);	// Temp
+	bool (*prior)(const T& x, const T &y);	// Comparison function
 	int length;		// Number of elements in the heap.
 	int capacity;	// The maximum number of elements it can hold.
-	heapType tag;	// Either min_heap or max_heap.
+	heapType type;	// Either min_heap or max_heap.
 	T *elements;	// Elements
 
 	// Utility functions
@@ -50,7 +66,7 @@ public:
 
 	// Desc: Non-default constructor
 	// Post: Capacity is 1 unit larger than the length of given array.
-	Heap(const T *arr, int length, heapType tag);
+	Heap(const T *arr, int length, heapType type);
 
 	// Desc: Copy constructor
 	Heap(const Heap &rhs);
@@ -60,7 +76,7 @@ public:
 
 	// Desc: Builds a heap from a given array of given size.
 	// Post: Capacity is 1 unit larger than the length of given array.
-	void initHeap(const T *arr, int length, heapType tag);
+	void initHeap(const T *arr, int length, heapType type);
 
 	// Desc: Returns the reference of the root node.
 	//  Pre: Heap is not empty.
@@ -92,7 +108,7 @@ public:
 	template <class K>
 	friend ostream& operator << (ostream& os, const Heap<K> &H);
 
-};
+}; // Heap
 
 
 // Utility functions
@@ -115,27 +131,36 @@ void Heap<T>::heapify(int index) {
 	int left = 2 * index + 1, right = 2 * index + 2;
 	if (index < 0 || index > (length - 2) / 2)	// Invalid index or leaf node.
 		return;
-	if (tag == min_heap) {	// Temp
-		int priorIdx = index;
-		if (right < length && elements[right] < elements[index])
-			priorIdx = right;
-		if (elements[left] < elements[priorIdx])
-			priorIdx = left;
-		if (priorIdx != index) {
-			swap(elements[index], elements[priorIdx]);
-			heapify(priorIdx);
-		}
-	} else {	// max_heap
-		int priorIdx = index;
-		if (right < length && elements[right] > elements[index])
-			priorIdx = right;
-		if (elements[left] > elements[priorIdx])
-			priorIdx = left;
-		if (priorIdx != index) {
-			swap(elements[index], elements[priorIdx]);
-			heapify(priorIdx);
-		}
+	int priorIdx = index;
+	if (right < length && prior(elements[right], elements[index]))
+		priorIdx = right;
+	if (prior(elements[left], elements[priorIdx]))
+		priorIdx = left;
+	if (priorIdx != index) {
+		swap(elements[index], elements[priorIdx]);
+		heapify(priorIdx);
 	}
+	// if (type == min_heap) {	// Temp
+	// 	int priorIdx = index;
+	// 	if (right < length && elements[right] < elements[index])
+	// 		priorIdx = right;
+	// 	if (elements[left] < elements[priorIdx])
+	// 		priorIdx = left;
+	// 	if (priorIdx != index) {
+	// 		swap(elements[index], elements[priorIdx]);
+	// 		heapify(priorIdx);
+	// 	}
+	// } else {	// max_heap
+	// 	int priorIdx = index;
+	// 	if (right < length && elements[right] > elements[index])
+	// 		priorIdx = right;
+	// 	if (elements[left] > elements[priorIdx])
+	// 		priorIdx = left;
+	// 	if (priorIdx != index) {
+	// 		swap(elements[index], elements[priorIdx]);
+	// 		heapify(priorIdx);
+	// 	}
+	// }
 } // heapify
 
 // Desc: Trickle up the tree, so that the heap properties can be maintained.
@@ -144,17 +169,21 @@ void Heap<T>::trickleUp(int index) {
 	if (index <= 0 || index >= length)	// Root node or invalid index.
 		return;
 	int parent = (index - 1) / 2;
-	if (tag == min_heap) {	// Temp
-		if (elements[index] < elements[parent]) {
-			swap(elements[index], elements[parent]);
-			trickleUp(parent);
-		}
-	} else {	// max heap
-		if (elements[index] > elements[parent]) {
-			swap(elements[index], elements[parent]);
-			trickleUp(parent);
-		}
+	if (prior(elements[index], elements[parent])) {
+		swap(elements[index], elements[parent]);
+		trickleUp(parent);
 	}
+	// if (type == min_heap) {	// Temp
+	// 	if (elements[index] < elements[parent]) {
+	// 		swap(elements[index], elements[parent]);
+	// 		trickleUp(parent);
+	// 	}
+	// } else {	// max heap
+	// 	if (elements[index] > elements[parent]) {
+	// 		swap(elements[index], elements[parent]);
+	// 		trickleUp(parent);
+	// 	}
+	// }
 } // trickleUp
 
 
@@ -163,7 +192,8 @@ void Heap<T>::trickleUp(int index) {
 template <class T>
 Heap<T>::Heap() {
 	capacity = INITIAL_SIZE;
-	tag = min_heap;
+	type = min_heap;
+	prior = &isSmaller<T>;
 	length = 0;
 	elements = new T[capacity];
 } // Default constructor
@@ -171,10 +201,11 @@ Heap<T>::Heap() {
 // Desc: Non-default constructor
 // Post: Capacity is 1 unit larger than the length of given array.
 template <class T>
-Heap<T>::Heap(const T *arr, int length, heapType tag) {
+Heap<T>::Heap(const T *arr, int length, heapType type) {
 	capacity = length + 1;
 	this -> length = length;
-	this -> tag = tag;
+	this -> type = type;
+	prior = (type == min_heap) ? &isSmaller<T> : &isGreater<T>;
 	elements = new T[capacity];
 	for (int i = 0; i < length; i++)
 		elements[i] = arr[i];
@@ -187,7 +218,7 @@ template <class T>
 Heap<T>::Heap(const Heap &rhs) {
 	length = rhs.length;
 	capacity = rhs.capacity;
-	tag = rhs.tag;
+	type = rhs.type;
 	elements = new T[capacity];
 	for (int i = 0; i < length; i++)
 		elements[i] = rhs.elements[i];
@@ -202,13 +233,13 @@ Heap<T>::~Heap() {
 // Desc: Builds a heap from a given array of given size.
 // Post: Capacity is 1 unit larger than the length of given array.
 template <class T>
-void Heap<T>::initHeap(const T *arr, int length, heapType tag) {
+void Heap<T>::initHeap(const T *arr, int length, heapType type) {
 	if (capacity > 0) {
 		delete [] elements;
 	}
 	capacity = length + 1;
 	this -> length = length;
-	this -> tag = tag;
+	this -> type = type;
 	elements = new T[capacity];
 	for (int i = 0; i < length; i++)
 		elements[i] = arr[i];
@@ -278,7 +309,7 @@ Heap<T>& Heap<T>::operator = (const Heap<T> &rhs) {
 		delete [] elements;
 	length = rhs.length;
 	capacity = rhs.capacity;
-	tag = rhs.tag;
+	type = rhs.type;
 	elements = new T[capacity];
 	for (int i = 0; i < length; i++)
 		elements[i] = rhs.elements[i];
