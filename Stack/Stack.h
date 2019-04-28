@@ -88,10 +88,9 @@ Stack<T>::~Stack() {
 //       Capacity is doubled if the stack is full.
 template <class T>
 void Stack<T>::push(const T &x) {
-	arr[length++] = x;
-
-	// Stack is full.
-	if (length == capacity) {
+	if (length < capacity) {		// Stack is not full.
+		arr[length++] = x;
+	} else {	// Stack is full.
 		capacity *= 2;
 		T *tmp = new T[capacity];
 		for (int i = 0; i < length; i++) {
@@ -99,6 +98,7 @@ void Stack<T>::push(const T &x) {
 		}
 		delete [] arr;
 		arr = tmp;
+		arr[length++] = x;
 	}
 } // push
 
