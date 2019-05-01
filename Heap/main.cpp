@@ -19,18 +19,24 @@ int main() {
 
 	srand(time(NULL));
 
-	int n = 9;
-	// int num = rand() % n;
+	int n = 20;
+	int num = rand() % n;
 	int *A = new int[n];
 
 	for (int i = 0; i < n; i++) {
-		A[i] = n - i + 1;
-		// A[i] = rand() % n;
+		A[i] = rand() % n;
 	}
 
 	Heap<int> H(A, n, min_heap);
-
 	cout << H << endl;
+
+	cout << "num = " << num << endl;
+	while (num--) {
+		getchar();
+		cout << "delete: " << H.extractRoot() << endl;
+		cout << H << endl;
+		cout << "size: " << H.size() << endl;
+	}
 
 	delete [] A;
 	return 0;

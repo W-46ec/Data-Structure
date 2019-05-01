@@ -12,6 +12,7 @@
 #pragma once
 
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -40,7 +41,6 @@ template <class T>
 class Heap {
 private:
 	static int const INITIAL_SIZE = 8;		// Initial capacity
-	bool (*prior)(const T& x, const T &y);	// Comparison function
 	int length;		// Number of elements in the heap.
 	int capacity;	// The maximum number of elements it can hold.
 	heapType type;	// Either min_heap or max_heap.
@@ -48,16 +48,23 @@ private:
 
 	// Utility functions
 
-	// Desc: Swaps two elements.
+	// Desc: Comparison function.
+	// Post: Returns true if x has higher priority than y.
+	bool (*prior)(const T& x, const T &y);
+
+	// Desc: Swaps two objects.
 	void swap(T &x, T &y);
 
-	// Desc: Heapifies a subtree with the root at given index.
-	//  Pre: The given index is valid.
-	//       Both left and right subtrees of the given root are heaps.
+	// Desc: Heapifies a subtree rooted at the given index.
+	//  Pre: The given index is a valid index.
+	//       Both its left and right subtrees are heaps.
 	void heapify(int index);
 
 	// Desc: Trickle up the tree, so that the heap properties can be maintained.
 	void trickleUp(int index);
+
+	// Desc: Prints the content of the heap in form of binary tree (Helper function).
+	void display(int index, bool drawBranch[]) const;
 
 public:
 	// Desc: Default constructor
@@ -73,6 +80,9 @@ public:
 
 	// Desc: Destructor
 	~Heap();
+
+	// Desc: Returns the heap type.
+	heapType getType() const;
 
 	// Desc: Builds a heap from a given array of given size.
 	// Post: Capacity is 1 unit larger than the length of given array.
@@ -104,7 +114,7 @@ public:
 	// Desc: Assignment operator.
 	Heap& operator = (const Heap &rhs);
 
-	// Desc: Prints the content of the heap.
+	// Desc: Prints the content of the heap in form of binary tree.
 	template <class K>
 	friend ostream& operator << (ostream& os, const Heap<K> &H);
 
@@ -113,7 +123,7 @@ public:
 
 // Utility functions
 
-// Desc: Swaps two elements.
+// Desc: Swaps two objects.
 template <class T>
 void Heap<T>::swap(T &x, T &y) {
 	if (&x != &y) {
@@ -123,44 +133,22 @@ void Heap<T>::swap(T &x, T &y) {
 	}
 } // swap
 
-// Desc: Heapifies a subtree with the root at given index.
-//  Pre: The given index is valid.
-//       Both left and right subtrees of the given root are heaps.
+// Desc: Heapifies a subtree rooted at the given index.
+//  Pre: The given index is a valid index.
+//       Both its left and right subtrees are heaps.
 template <class T>
 void Heap<T>::heapify(int index) {
-	int left = 2 * index + 1, right = 2 * index + 2;
 	if (index < 0 || index > (length - 2) / 2)	// Invalid index or leaf node.
 		return;
-	int priorIdx = index;
-	if (right < length && prior(elements[right], elements[index]))
+	int left = 2 * index + 1, right = 2 * index + 2, priorIdx = index;
+	if (right < length && prior(elements[right], elements[index]))	// Right child has higher priority.
 		priorIdx = right;
-	if (prior(elements[left], elements[priorIdx]))
+	if (prior(elements[left], elements[priorIdx]))	// Left child has higher priority.
 		priorIdx = left;
-	if (priorIdx != index) {
+	if (priorIdx != index) {	// One of the children has higher priority.
 		swap(elements[index], elements[priorIdx]);
 		heapify(priorIdx);
 	}
-	// if (type == min_heap) {	// Temp
-	// 	int priorIdx = index;
-	// 	if (right < length && elements[right] < elements[index])
-	// 		priorIdx = right;
-	// 	if (elements[left] < elements[priorIdx])
-	// 		priorIdx = left;
-	// 	if (priorIdx != index) {
-	// 		swap(elements[index], elements[priorIdx]);
-	// 		heapify(priorIdx);
-	// 	}
-	// } else {	// max_heap
-	// 	int priorIdx = index;
-	// 	if (right < length && elements[right] > elements[index])
-	// 		priorIdx = right;
-	// 	if (elements[left] > elements[priorIdx])
-	// 		priorIdx = left;
-	// 	if (priorIdx != index) {
-	// 		swap(elements[index], elements[priorIdx]);
-	// 		heapify(priorIdx);
-	// 	}
-	// }
 } // heapify
 
 // Desc: Trickle up the tree, so that the heap properties can be maintained.
@@ -173,18 +161,70 @@ void Heap<T>::trickleUp(int index) {
 		swap(elements[index], elements[parent]);
 		trickleUp(parent);
 	}
-	// if (type == min_heap) {	// Temp
-	// 	if (elements[index] < elements[parent]) {
-	// 		swap(elements[index], elements[parent]);
-	// 		trickleUp(parent);
-	// 	}
-	// } else {	// max heap
-	// 	if (elements[index] > elements[parent]) {
-	// 		swap(elements[index], elements[parent]);
-	// 		trickleUp(parent);
-	// 	}
-	// }
 } // trickleUp
+
+// Desc: Prints the content of the heap in form of binary tree (Helper function).
+template<class T>
+void Heap<T>::display(int index, bool drawBranch[]) const {
+	if (index == length) {
+		
+		// If there's left child but no right child, place an "NULL" 
+		// at right child's position. It happens only to the last node.
+		cout << "NULL" << endl;
+	} else {	// Print the elements.
+		cout << elements[index] << endl;
+	}
+
+	// Leaf or invalid index.
+	if (index > (length - 2) / 2)
+		return;
+
+	int left = 2 * index + 1, right = 2 * index + 2, parent = (index - 1) / 2;
+	int level = (int)log2((float)(index + 1)), count;
+
+	// Set the "drawBranch" of previous level to false if current node
+	// is the left child of its parent. Otherwise, set it to true.
+	if (index > 0 && 2 * parent + 1 == index) {
+		drawBranch[level - 1] = false;
+	} else if (index > 0 && 2 * parent + 2 == index) {
+		drawBranch[level - 1] = true;
+	}
+
+	string branch1 = "|   ", branch2 = "|---", spaces = "    ";
+	count = 0;
+	while (count++ < level) {	// Draw branches.
+		if (drawBranch[count - 1]) {
+			cout << branch1;
+		} else {
+			cout << spaces;
+		}
+	}
+	cout << branch2;
+	display(right, drawBranch);
+
+	count = 0;
+	while (count++ < level) {	// Draw branches.
+		if (drawBranch[count - 1]) {
+			cout << branch1;
+		} else {
+			cout << spaces;
+		}
+	}
+	cout << branch2;
+	display(left, drawBranch);
+
+	// Draw gaps between siblings.
+	if (index == 2 * parent + 2) {
+		for (int i = 0; i < level - 1; i++) {
+			if (drawBranch[i]) {
+				cout << branch1;
+			} else {
+				cout << spaces;
+			}
+		}
+		cout << branch1 << endl;
+	}
+} // display
 
 
 // Desc: Default constructor
@@ -230,13 +270,18 @@ Heap<T>::~Heap() {
 	delete [] elements;
 } // Destructor
 
+// Desc: Returns the heap type.
+template <class T>
+heapType Heap<T>::getType() const {
+	return type;
+} // getType
+
 // Desc: Builds a heap from a given array of given size.
 // Post: Capacity is 1 unit larger than the length of given array.
 template <class T>
 void Heap<T>::initHeap(const T *arr, int length, heapType type) {
-	if (capacity > 0) {
+	if (capacity > 0)
 		delete [] elements;
-	}
 	capacity = length + 1;
 	this -> length = length;
 	this -> type = type;
@@ -316,12 +361,16 @@ Heap<T>& Heap<T>::operator = (const Heap<T> &rhs) {
 	return *this;
 } // operator =
 
-// Desc: Prints the content of the heap.
+// Desc: Prints the content of the heap in form of binary tree (Helper function).
 template <class K>
 ostream& operator << (ostream& os, const Heap<K> &H) {
-	// Temp
-	for (int i = 0; i < H.length; i++) {
-		os << H.elements[i] << " ";
+	if (H.length >= 2) {
+		int height = (int)log2((float)(H.length));
+		bool *drawBranch = new bool[height];
+		H.display(0, drawBranch);
+		delete [] drawBranch;
+	} else if (H.length == 1) {
+		os << H.elements[0] << endl;
 	}
 	return os;
 } // operator <<
