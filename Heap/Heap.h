@@ -12,6 +12,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <cmath>
 
 using namespace std;
@@ -259,6 +260,7 @@ Heap<T>::Heap(const Heap &rhs) {
 	length = rhs.length;
 	capacity = rhs.capacity;
 	type = rhs.type;
+	prior = (type == min_heap) ? &isSmaller<T> : &isGreater<T>;
 	elements = new T[capacity];
 	for (int i = 0; i < length; i++)
 		elements[i] = rhs.elements[i];
@@ -364,13 +366,15 @@ Heap<T>& Heap<T>::operator = (const Heap<T> &rhs) {
 // Desc: Prints the content of the heap in form of binary tree (Helper function).
 template <class K>
 ostream& operator << (ostream& os, const Heap<K> &H) {
-	if (H.length >= 2) {
+	if (H.length <= 0) {
+		os << "NULL" << endl;
+	}  else if (H.length == 1) {
+		os << H.elements[0] << endl;
+	} else {
 		int height = (int)log2((float)(H.length));
 		bool *drawBranch = new bool[height];
 		H.display(0, drawBranch);
 		delete [] drawBranch;
-	} else if (H.length == 1) {
-		os << H.elements[0] << endl;
 	}
 	return os;
 } // operator <<
