@@ -53,6 +53,10 @@ public:
 	// Desc: Assignment operator.
 	Stack& operator = (const Stack &rhs);
 
+	// Desc: "Equal to" operator.
+	// Post: Returns true if the content of two stacks are the same.
+	bool operator == (const Stack &rhs) const;
+
 	// Desc: Prints the content of the stack.
 	template <class K>
 	friend ostream& operator << (ostream& os, const Stack<K> &S);
@@ -146,6 +150,20 @@ Stack<T>& Stack<T>::operator = (const Stack<T> &rhs) {
 		arr[i] = rhs.arr[i];
 	return *this;
 } // operator =
+
+// Desc: "Equal to" operator.
+// Post: Returns true if the content of two stacks are the same.
+template <class T>
+bool Stack<T>::operator == (const Stack<T> &rhs) const {
+	if (this == &rhs)
+		return true;
+	if (length != rhs.length)
+		return false;
+	for (int i = 0; i < length; i++)
+		if (arr[i] != rhs.arr[i])
+			return false;
+	return true;
+} // operator ==
 
 // Desc: Prints the content of the stack.
 template <class K>

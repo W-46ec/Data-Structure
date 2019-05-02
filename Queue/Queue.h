@@ -59,6 +59,10 @@ public:
 	// Desc: Assignment operator.
 	Queue& operator = (const Queue &rhs);
 
+	// Desc: "Equal to" operator.
+	// Post: Returns true if the content of two queues are the same.
+	bool operator == (const Queue &rhs) const;
+
 	// Desc: Prints the content of the queue.
 	template <class K>
 	friend ostream& operator << (ostream& os, const Queue<K> &Q);
@@ -185,6 +189,23 @@ Queue<T>& Queue<T>::operator = (const Queue<T> &rhs) {
 	}
 	return *this;
 } // operator =
+
+// Desc: "Equal to" operator.
+// Post: Returns true if the content of two queues are the same.
+template <class T>
+bool Queue<T>::operator == (const Queue<T> &rhs) const {
+	if (this == &rhs)
+		return true;
+	if (length != rhs.length)
+		return false;
+	for (int i = 0; i < length; i++) {
+		int idx1 = (frontIndex + i) % capacity;
+		int idx2 = (rhs.frontIndex + i) % rhs.capacity;
+		if (arr[idx1] != rhs.arr[idx2])
+			return false;
+	}
+	return true;
+} // operator ==
 
 // Desc: Prints the content of the queue.
 template <class K>

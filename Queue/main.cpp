@@ -40,8 +40,12 @@ int main() {
 		cout << "size: " << Q1.size() << endl;
 		cout << "Queue: " << Q1 << endl;
 	}
+	cout << "\nQ == Q1: " << (Q == Q1) << endl;
+	Queue<int> Q2 = Q1;
+	cout << "Q1 == Q2: " << (Q1 == Q2) << endl;
 	cout << "\nAssignment operator test." << endl;
 	Q = Q1;
+	cout << "Q == Q1: " << (Q == Q1) << endl;
 	cout << "size: " << Q.size() << endl;
 	cout << "Q: " << Q << endl;
 
@@ -64,8 +68,12 @@ int main() {
 		cout << "size: " << str_Q1.size() << endl;
 		cout << "Queue: " << str_Q1 << endl;
 	}
+	cout << "\nstr_Q == str_Q1: " << (str_Q == str_Q1) << endl;
+	Queue<string> str_Q2 = str_Q1;
+	cout << "str_Q1 == str_Q2: " << (str_Q1 == str_Q2) << endl;
 	cout << "\nAssignment operator test." << endl;
 	str_Q = str_Q1;
+	cout << "str_Q == str_Q1: " << (str_Q == str_Q1) << endl;
 	cout << "size: " << str_Q.size() << endl;
 	cout << "str_Q: " << str_Q << endl;
 

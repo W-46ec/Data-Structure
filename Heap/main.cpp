@@ -48,9 +48,11 @@ int main() {
 		cout << "H2: " << endl << H2 << endl;
 	}
 
+	cout << "\nH1 == H2: " << (H1 == H2) << endl;
 	cout << "\nAssignment operator test." << endl;
 	H1 = H2;
 	H1 = H1;
+	cout << "H1 == H2: " << (H1 == H2) << endl;
 	cout << "H1: " << endl;
 	H1.getType() == 0 ? cout << "type: min heap" << endl : cout << "type: max heap" << endl;
 	cout << H1 << endl;
@@ -86,9 +88,11 @@ int main() {
 		cout << "str_H2: " << endl << str_H2 << endl;
 	}
 
+	cout << "\nstr_H1 == str_H2: " << (str_H1 == str_H2) << endl;
 	cout << "\nAssignment operator test." << endl;
 	str_H1 = str_H2;
 	str_H1 = str_H1;
+	cout << "str_H1 == str_H2: " << (str_H1 == str_H2) << endl;
 	cout << "str_H1: " << endl;
 	str_H1.getType() == 0 ? cout << "type: min heap" << endl : cout << "type: max heap" << endl;
 	cout << str_H1 << endl;

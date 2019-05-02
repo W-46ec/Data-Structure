@@ -39,8 +39,10 @@ int main() {
 		cout << "size: " << S1.size() << endl;
 		cout << "stack: " << S1 << endl;
 	}
+	cout << "\nS == S1: " << (S == S1) << endl;
 	cout << "\nAssignment operator test." << endl;
 	S = S1;
+	cout << "S == S1: " << (S == S1) << endl;
 	cout << "size: " << S.size() << endl;
 	cout << "S: " << S << endl;
 
@@ -62,8 +64,10 @@ int main() {
 		cout << "size: " << str_S1.size() << endl;
 		cout << "stack: " << str_S1 << endl;
 	}
+	cout << "\nstr_S == str_S1: " << (str_S == str_S1) << endl;
 	cout << "\nAssignment operator test." << endl;
 	str_S = str_S1;
+	cout << "str_S == str_S1: " << (str_S == str_S1) << endl;
 	cout << "size: " << str_S.size() << endl;
 	cout << "str_S: " << str_S << endl;
 

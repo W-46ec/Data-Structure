@@ -115,6 +115,10 @@ public:
 	// Desc: Assignment operator.
 	Heap& operator = (const Heap &rhs);
 
+	// Desc: "Equal to" operator.
+	// Post: Returns true if the type and the content of two heaps are the same.
+	bool operator == (const Heap &rhs) const;
+
 	// Desc: Prints the content of the heap in form of binary tree.
 	template <class K>
 	friend ostream& operator << (ostream& os, const Heap<K> &H);
@@ -362,6 +366,21 @@ Heap<T>& Heap<T>::operator = (const Heap<T> &rhs) {
 		elements[i] = rhs.elements[i];
 	return *this;
 } // operator =
+
+// Desc: "Equal to" operator.
+// Post: Returns true if the type and the content of two heaps are the same.
+template <class T>
+bool Heap<T>::operator == (const Heap<T> &rhs) const {
+	if (this == &rhs)
+		return true;
+	if ((length != rhs.length) || (type != rhs.type))
+		return false;
+	for (int i = 0; i < length; i++) {
+		if (elements[i] != rhs.elements[i])
+			return false;
+	}
+	return true;
+} // operator ==
 
 // Desc: Prints the content of the heap in form of binary tree (Helper function).
 template <class K>
