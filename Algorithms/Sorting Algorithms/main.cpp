@@ -17,6 +17,7 @@
 #include "SelectionSort.cpp"
 #include "MergeSort.cpp"
 #include "QuickSort.cpp"
+#include "HeapSort.cpp"
 
 #define N 100000
 
@@ -33,6 +34,14 @@ void printArr(const T *arr, int length) {
 		cout << arr[i] << "  ";
 	cout << endl;
 } // printArr
+
+template <class T>
+bool isIncreasing(const T *arr, int length) {
+	for (int i = 1; i < length; i++)
+		if (arr[i] < arr[i - 1])
+			return false;
+	return true;
+} // isIncreasing
 
 int main() {
 
@@ -91,6 +100,15 @@ int main() {
 	}
 	cout << "Completed in " << (clock() - start) / (double)(CLOCKS_PER_SEC) << " seconds." << endl;
 	sleep(1);	// Wait for 1 second.
+
+
+	// Heap Sort
+	cout << "\nHeap Sort: " << endl;
+	for (int i = 0; i < N; i++) {
+		fillIntArr(A, n);
+		HeapSort<int>(A, n);
+	}
+	cout << "Completed in " << (clock() - start) / (double)(CLOCKS_PER_SEC) << " seconds." << endl;
 
 	delete [] A;
 
