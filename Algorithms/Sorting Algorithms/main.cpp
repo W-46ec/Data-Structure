@@ -14,6 +14,7 @@
 #include "bubbleSort.cpp"
 #include "InsertionSort.cpp"
 #include "SelectionSort.cpp"
+#include "MergeSort.cpp"
 
 using namespace std;
 
@@ -55,6 +56,13 @@ int main() {
 	fillIntArr(A, n);
 	printArr<int>(A, n);
 	SelectionSort<int>(A, n);
+	printArr<int>(A, n);
+
+	// Merge Sort
+	cout << "\nMerge Sort: " << endl;
+	fillIntArr(A, n);
+	printArr<int>(A, n);
+	MergeSort<int>(A, 0, n - 1);
 	printArr<int>(A, n);
 
 	delete [] A;
