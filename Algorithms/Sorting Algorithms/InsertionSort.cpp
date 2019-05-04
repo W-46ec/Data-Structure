@@ -8,6 +8,7 @@
  */
 
 // Desc: Insertion sort.
+// Post: arr[] is sorted in increasing order.
 template <class T>
 void InsertionSort(T arr[], int length) {
 	for (int i = 1; i < length; i++) {

@@ -10,6 +10,7 @@
 #include "swap.cpp"
 
 // Desc: Bubble sort.
+// Post: arr[] is sorted in increasing order.
 template <class T>
 void bubbleSort(T arr[], int length) {
 	bool changed = true;

@@ -10,6 +10,7 @@
 #include "swap.cpp"
 
 // Desc: Selection sort.
+// Post: arr[] is sorted in increasing order.
 template <class T>
 void SelectionSort(T arr[], int length) {
 	for (int i = length - 1; i >= 0; i--) {
