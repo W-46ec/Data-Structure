@@ -10,7 +10,7 @@
 // Desc: Merges two sub-arrays (template).
 //  Pre: arr[low ... mid] is sorted in increasing order.
 //       arr[mid + 1 ... high] is sorted in increasing order.
-// Post: arr[low .. high] is sorted in increasing order.
+// Post: arr[low ... high] is sorted in increasing order.
 template <class T>
 void Merge(T arr[], int low, int mid, int high) {
 	if (low >= high)	// The array has only one element or arguments are invalid.
@@ -19,7 +19,7 @@ void Merge(T arr[], int low, int mid, int high) {
 	int i = low, j = mid + 1, idx = 0;
 
 	while (i <= mid && j <= high) {
-		if (arr[i] < arr[j])
+		if (arr[i] <= arr[j])	// "<=" --- a stable sort.
 			tmpArr[idx++] = arr[i++];
 		else
 			tmpArr[idx++] = arr[j++];
