@@ -143,7 +143,7 @@ void Heap<T>::swap(T &x, T &y) {
 //       Both its left and right subtrees are heaps.
 template <class T>
 void Heap<T>::heapify(int index) {
-	if (index < 0 || index > (length - 2) / 2)	// Invalid index or leaf node.
+	if (index < 0 || index > (length - 2) / 2 || length <= 1)	// Invalid index or leaf node.
 		return;
 	int left = 2 * index + 1, right = 2 * index + 2, priorIdx = index;
 	if (right < length && prior(elements[right], elements[index]))	// Right child has higher priority.
