@@ -10,11 +10,15 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <unistd.h>	// Needed for sleep()
 
 #include "bubbleSort.cpp"
 #include "InsertionSort.cpp"
 #include "SelectionSort.cpp"
 #include "MergeSort.cpp"
+#include "QuickSort.cpp"
+
+#define N 100000
 
 using namespace std;
 
@@ -34,36 +38,59 @@ int main() {
 
 	srand(time(NULL));
 	int n = 10;
+	clock_t start;
 
 	int *A = new int[n];
 
 	// Bubble Sort
 	cout << "\nBubble Sort: " << endl;
-	fillIntArr(A, n);
-	printArr<int>(A, n);
-	bubbleSort<int>(A, n);
-	printArr<int>(A, n);
+	start = clock();
+	for (int i = 0; i < N; i++) {
+		fillIntArr(A, n);
+		bubbleSort<int>(A, n);
+	}
+	cout << "Completed in " << (clock() - start) / (double)(CLOCKS_PER_SEC) << " seconds." << endl;
+	sleep(1);	// Wait for 1 second.
 
 	// Insertion Sort
 	cout << "\nInsertion Sort: " << endl;
-	fillIntArr(A, n);
-	printArr<int>(A, n);
-	InsertionSort<int>(A, n);
-	printArr<int>(A, n);
+	start = clock();
+	for (int i = 0; i < N; i++) {
+		fillIntArr(A, n);
+		InsertionSort<int>(A, n);
+	}
+	cout << "Completed in " << (clock() - start) / (double)(CLOCKS_PER_SEC) << " seconds." << endl;
+	sleep(1);	// Wait for 1 second.
 
 	// Selection Sort
 	cout << "\nSelection Sort: " << endl;
-	fillIntArr(A, n);
-	printArr<int>(A, n);
-	SelectionSort<int>(A, n);
-	printArr<int>(A, n);
+	start = clock();
+	for (int i = 0; i < N; i++) {
+		fillIntArr(A, n);
+		SelectionSort<int>(A, n);
+	}
+	cout << "Completed in " << (clock() - start) / (double)(CLOCKS_PER_SEC) << " seconds." << endl;
+	sleep(1);	// Wait for 1 second.
 
 	// Merge Sort
 	cout << "\nMerge Sort: " << endl;
-	fillIntArr(A, n);
-	printArr<int>(A, n);
-	MergeSort<int>(A, 0, n - 1);
-	printArr<int>(A, n);
+	start = clock();
+	for (int i = 0; i < N; i++) {
+		fillIntArr(A, n);
+		MergeSort<int>(A, 0, n - 1);
+	}
+	cout << "Completed in " << (clock() - start) / (double)(CLOCKS_PER_SEC) << " seconds." << endl;
+	sleep(1);	// Wait for 1 second.
+
+	// Quick Sort
+	cout << "\nQuick Sort: " << endl;
+	start = clock();
+	for (int i = 0; i < N; i++) {
+		fillIntArr(A, n);
+		QuickSort<int>(A, 0, n - 1);
+	}
+	cout << "Completed in " << (clock() - start) / (double)(CLOCKS_PER_SEC) << " seconds." << endl;
+	sleep(1);	// Wait for 1 second.
 
 	delete [] A;
 
