@@ -18,5 +18,8 @@ SelectionSort.o:	SelectionSort.cpp swap.cpp
 MergeSort.o:	MergeSort.cpp
 	g++ -Wall -c MergeSort.cpp
 
+QuickSort.o:	QuickSort.cpp
+	g++ -Wall -c QuickSort.cpp
+
 clean:
 	rm -f sort *.o
