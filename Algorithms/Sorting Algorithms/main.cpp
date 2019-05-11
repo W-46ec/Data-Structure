@@ -46,10 +46,12 @@ bool isIncreasing(const T *arr, int length) {
 int main() {
 
 	srand(time(NULL));
-	int n = 10;
+	int n = 50;
 	clock_t start;
 
 	int *A = new int[n];
+
+	cout << "N = " << N << ", length = " << n << endl;
 
 	// Bubble Sort
 	cout << "\nBubble Sort: " << endl;
