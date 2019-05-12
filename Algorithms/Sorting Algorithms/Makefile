@@ -3,7 +3,7 @@ all:	sort
 sort:	main.o
 	g++ -Wall -o sort main.o
 
-main.o:	main.cpp bubbleSort.o InsertionSort.o SelectionSort.o MergeSort.o QuickSort.o HeapSort.o RadixSort.o
+main.o:	main.cpp Helper.cpp bubbleSort.o InsertionSort.o SelectionSort.o MergeSort.o QuickSort.o HeapSort.o RadixSort.o
 	g++ -Wall -c main.cpp
 
 bubbleSort.o:	bubbleSort.cpp swap.cpp
