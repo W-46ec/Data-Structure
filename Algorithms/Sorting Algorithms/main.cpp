@@ -18,6 +18,7 @@
 #include "MergeSort.cpp"
 #include "QuickSort.cpp"
 #include "HeapSort.cpp"
+#include "RadixSort.cpp"
 
 #define N 100000
 
@@ -103,12 +104,21 @@ int main() {
 	cout << "Completed in " << (clock() - start) / (double)(CLOCKS_PER_SEC) << " seconds." << endl;
 	sleep(1);	// Wait for 1 second.
 
-
 	// Heap Sort
 	cout << "\nHeap Sort: " << endl;
+	start = clock();
 	for (int i = 0; i < N; i++) {
 		fillIntArr(A, n);
 		HeapSort<int>(A, n);
+	}
+	cout << "Completed in " << (clock() - start) / (double)(CLOCKS_PER_SEC) << " seconds." << endl;
+
+	// Radix Sort
+	cout << "\nRadix Sort: " << endl;
+	start = clock();
+	for (int i = 0; i < N; i++) {
+		fillIntArr(A, n);
+		RadixSort(A, n);
 	}
 	cout << "Completed in " << (clock() - start) / (double)(CLOCKS_PER_SEC) << " seconds." << endl;
 
