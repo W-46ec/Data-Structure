@@ -20,29 +20,11 @@
 #include "HeapSort.cpp"
 #include "RadixSort.cpp"
 
+#include "Helper.cpp"
+
 #define N 100000
 
 using namespace std;
-
-void fillIntArr(int *arr, int length) {
-	for (int i = 0; i < length; i++)
-		arr[i] = rand() % (100 * length);
-} // fillIntArr
-
-template <class T>
-void printArr(const T *arr, int length) {
-	for (int i = 0; i < length; i++)
-		cout << arr[i] << "  ";
-	cout << endl;
-} // printArr
-
-template <class T>
-bool isIncreasing(const T *arr, int length) {
-	for (int i = 1; i < length; i++)
-		if (arr[i] < arr[i - 1])
-			return false;
-	return true;
-} // isIncreasing
 
 int main() {
 
