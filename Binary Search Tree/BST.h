@@ -50,6 +50,9 @@ private:
 	// Post: Return the root of the new tree.
 	BTnode<T> *copyTree(BTnode<T> *tree) const;
 
+	// Desc: Return true if the content of two trees are the same (Helper function).
+	bool isSame(const BTnode<T> *A, const BTnode<T> *B) const;
+
 	// Desc: Perform pre-order traversal (Helper functions).
 	// Post: The pointers to the nodes are stored in the given array.
 	void preorder(BTnode<T> *tree, BTnode<T> **arr, int &idx) const;
@@ -136,9 +139,9 @@ public:
 	// Desc: Assignment operator.
 	BST& operator = (const BST &rhs);
 
-	// // Desc: "Equal to" operator.
-	// // Post: Returns true if the content of two trees are the same.
-	// bool operator == (const BST &rhs) const;
+	// Desc: "Equal to" operator.
+	// Post: Returns true if the content of two trees are the same.
+	bool operator == (const BST &rhs) const;
 
 	// Desc: Prints the content of the tree.
 	template <class K>
@@ -276,6 +279,18 @@ BTnode<T> *BST<T>::copyTree(BTnode<T> *tree) const {
 
 	return newNode;
 } // copyTree
+
+// Desc: Return true if the content of two trees are the same (Helper function).
+template <class T>
+bool BST<T>::isSame(const BTnode<T> *A, const BTnode<T> *B) const {
+	if (A == NULL and B == NULL)
+		return true;
+	if (A == NULL || B == NULL)
+		return false;
+	if (A -> key != B -> key)
+		return false;
+	return isSame(A -> left, B -> left) && isSame(A -> right, B -> right);
+} // isSame
 
 // Desc: Perform pre-order traversal (Helper functions).
 // Post: The pointers to the nodes are stored in the given array.
@@ -542,6 +557,17 @@ BST<T>& BST<T>::operator = (const BST<T> &rhs) {
 	}
 	return *this;
 } // operator =
+
+// Desc: "Equal to" operator.
+// Post: Returns true if the content of two trees are the same.
+template <class T>
+bool BST<T>::operator == (const BST<T> &rhs) const {
+	if (this == &rhs)
+		return true;
+	if (size != rhs.size)
+		return false;
+	return isSame(root, rhs.root);
+} // operator ==
 
 template <class K>
 ostream& operator << (ostream& os, const BST<K> &Tree) {

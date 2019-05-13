@@ -78,7 +78,7 @@ int main() {
 	BST<int> Tree2;
 	Tree2 = Tree0;
 	Tree0 = Tree1;
-	cout << "Tree0: " << endl << Tree0 << endl; 
+	cout << "Tree0 == Tree1: " << (Tree0 == Tree1) << endl; 
 	
 
 	// Traversal
