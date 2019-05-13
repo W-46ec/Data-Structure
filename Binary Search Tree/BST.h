@@ -133,6 +133,13 @@ public:
 	//       -1: post-order traversal;
 	void traversal(BTnode<T> **arr, int mode) const;
 
+	// Desc: Assignment operator.
+	BST& operator = (const BST &rhs);
+
+	// // Desc: "Equal to" operator.
+	// // Post: Returns true if the content of two trees are the same.
+	// bool operator == (const BST &rhs) const;
+
 	// Desc: Prints the content of the tree.
 	template <class K>
 	friend ostream& operator << (ostream& os, const BST<K> &Tree);
@@ -241,7 +248,6 @@ void BST<T>::deleteTree(BTnode<T> *tree) {
 		deleteTree(tree -> left);
 	if (tree -> right != NULL)
 		deleteTree(tree -> right);
-
 	delete tree;
 	tree = NULL;
 	size = 0;
@@ -500,7 +506,7 @@ int BST<T>::getHeight() const {
 // Desc: Return true is the tree is empty.
 template <class T>
 bool BST<T>::empty() const {
-	return (root == NULL);
+	return (size == 0);
 } // empty
 
 // Desc: Traverse the tree and store the sequence of pointers in the given array.
@@ -524,6 +530,18 @@ void BST<T>::traversal(BTnode<T> **arr, int mode) const {
 		break;
 	}
 } // traversal
+
+// Desc: Assignment operator.
+template <class T>
+BST<T>& BST<T>::operator = (const BST<T> &rhs) {
+	if (this != &rhs) {
+		if (size != 0)
+			deleteTree(root);
+		root = copyTree(rhs.root);
+		size = rhs.size;
+	}
+	return *this;
+} // operator =
 
 template <class K>
 ostream& operator << (ostream& os, const BST<K> &Tree) {

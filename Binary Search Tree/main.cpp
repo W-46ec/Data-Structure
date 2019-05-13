@@ -19,7 +19,7 @@ int main() {
 
 	srand(time(NULL));
 
-	int n = 10;
+	int n = 8;
 	int *A = new int[n];
 
 	for (int i = 0; i < n; i++)
@@ -33,7 +33,7 @@ int main() {
 	cout << "\nInsertion test..." << endl;
 	for (int i = 0; i < n; i++) {
 		Tree0.insert(A[i]);
-		// Tree.insert(i);
+		// Tree0.insert(i);
 	}
 	cout << "Inserted " << n << " elements." << endl;
 	cout << "Tree0.Size: " << Tree0.getSize() << endl;
@@ -71,31 +71,40 @@ int main() {
 			cout << "Enter the key of the node to be deleted: ";
 	}
 	cout << endl;
+
+
+	// Assignment operator test
+	cout << "\nAssignment operator test..." << endl;
+	BST<int> Tree2;
+	Tree2 = Tree0;
+	Tree0 = Tree1;
+	cout << "Tree0: " << endl << Tree0 << endl; 
 	
+
 	// Traversal
-	cout << "\nTraversal..." << endl;
-	BTnode<int> **nodePtrArr = new BTnode<int>*[Tree1.getSize()];
+	cout << "\nTraversal test on Tree2..." << endl;
+	BTnode<int> **nodePtrArr = new BTnode<int>*[Tree2.getSize()];
 
 	// Pre-order
-	Tree1.traversal(nodePtrArr, 1);
+	Tree2.traversal(nodePtrArr, 1);
 	cout << "pre-order:\t";
-	for (int i = 0; i < Tree1.getSize(); i++) {
+	for (int i = 0; i < Tree2.getSize(); i++) {
 		cout << *(nodePtrArr[i]) << " ";
 	}
 	cout << endl;
 
 	// In-order
-	Tree1.traversal(nodePtrArr, 0);
+	Tree2.traversal(nodePtrArr, 0);
 	cout << "in-order:\t";
-	for (int i = 0; i < Tree1.getSize(); i++) {
+	for (int i = 0; i < Tree2.getSize(); i++) {
 		cout << *(nodePtrArr[i]) << " ";
 	}
 	cout << endl;
 
 	// Post-order
-	Tree1.traversal(nodePtrArr, -1);
+	Tree2.traversal(nodePtrArr, -1);
 	cout << "post-order:\t";
-	for (int i = 0; i < Tree1.getSize(); i++) {
+	for (int i = 0; i < Tree2.getSize(); i++) {
 		cout << *(nodePtrArr[i]) << " ";
 	}
 	cout << endl;
